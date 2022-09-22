@@ -1,4 +1,5 @@
-!******************************************************************************!
+! ******************************************************************************!
+!
 ! Copyright 2022 Robert S. Browning IV
 !
 ! Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,11 +13,12 @@
 ! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
-!******************************************************************************!
+!
+! ******************************************************************************!
 !
 ! PROGRAM NAME:  ZeroExodus
 !
-! PROGRAM DEVELOPER:  Robert S. Browning IV, Browning Solutions, LLC
+! PROGRAM DEVELOPER:  Robert S. Browning IV, Ph.D.
 !
 ! PROGRAM DESCRIPTION:
 !     ZeroExodus sets nearly-zero coordinates in an Exodus/II mesh file to zero
@@ -61,7 +63,7 @@
 !
 !         https://github.com/sandialabs/seacas
 !
-!******************************************************************************!
+! ******************************************************************************!
 
 program ZeroExodus
 
