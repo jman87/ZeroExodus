@@ -305,7 +305,7 @@ function Int2Text(value)
   character(20) :: Int2Text
   ! Function variables
   character(5) :: frmt
-  character(20) :: string
+  character(19) :: string
   ! Select proper format
   select case (abs(value))
     case(0_ik:9_ik)
@@ -349,11 +349,12 @@ function Int2Text(value)
   end select
   ! Convert integer to character
   write(string,frmt) abs(value)
-  if (value < 0) then
-    string = "-" // adjustl(string)
+  ! Return left adjusted portion of string with correct sign
+  if (value < 0_ik) then
+    Int2Text = "-" // adjustl(string)
+  else
+    Int2Text = adjustl(string)
   endif
-  ! Return left adjusted portion of string
-  Int2Text = adjustl(string)
 end function Int2Text
 
 

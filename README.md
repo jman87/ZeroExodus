@@ -10,7 +10,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,4 +60,4 @@ no statement of suitability, liability, warranty, etc. is expressed or
 implied regarding SEACAS. The interested reader should consult the 
 following URL for more information about SEACAS:
 
-    [github.com/sandialabs/seacas](https://github.com/sandialabs/seacas)
+[github.com/sandialabs/seacas](https://github.com/sandialabs/seacas)
