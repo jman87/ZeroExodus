@@ -93,15 +93,19 @@ integer(INT32) :: ifile_len=0, ofile_len=0
 
 ! Default-Kind Integers
 integer(ik) :: i
+integer(ik) :: xn=0_ik, yn=0_ik, zn=0_ik, linen=0_ik
 
 ! Reals
 real(rk) :: coord_tol
 real(rk) :: x, y, z
 
+! Logicals
+logical :: line_count_flag = .false.
+
 ! Formats
 1 format(A)
-!2 format(/A)
-!3 format(A/)
+2 format(/A)
+3 format(A/)
 4 format(/A/)
 99 format(3ES16.7)
 
@@ -231,13 +235,15 @@ open(unit=2, file=ofile, iostat=iost, status="replace", action="write")
 !----------------------------!
 ! Begin Main Read/Write Loop !
 !----------------------------!
+write(*,3) "READING INPUT FILE"
 i = 0
 main_loop: do
   i = i + 1_ik
   read(1, 1, iostat=iost) text
 !print *, trim(text)
   if (is_iostat_end(iost)) then
-    write(*,4) "END OF FILE REACHED"
+    write(*,1) "END OF FILE REACHED"
+    write(*,4) "******************************************************"
     exit main_loop
   elseif (iost /= 0) then
     write(*,4) "ERROR:  PROBLEM READINPUT AT LINE " // int2text(i)
@@ -264,12 +270,22 @@ main_loop: do
         read(text, 99) x, y, z
         if (abs(x) <= coord_tol) then
           x = ZERO
+          xn = xn + 1_ik
+          line_count_flag = .true.
         endif
         if (abs(y) <= coord_tol) then
           y = ZERO
+          yn = yn + 1_ik
+          line_count_flag = .true.
         endif
         if (abs(z) <= coord_tol) then
           z = ZERO
+          zn = zn + 1_ik
+          line_count_flag = .true.
+        endif
+        if (line_count_flag .EQV. .true.) then
+          linen = linen + 1_ik
+          line_count_flag = .false.
         endif
         write(2, 99) x, y, z
       endif
@@ -289,7 +305,14 @@ close(2)
 !--------------------------!
 ! Soft End of Main Program !
 !--------------------------!
-write(*,4) "NORMAL TERMINATION"
+
+write(*,1) "NUMBER OF MODIFIED X COORDINATES:  " // trim(Int2Text(xn))
+write(*,1) "NUMBER OF MODIFIED Y COORDINATES:  " // trim(Int2Text(yn))
+write(*,1) "NUMBER OF MODIFIED Z COORDINATES:  " // trim(Int2Text(zn))
+write(*,2) "NUMBER OF MODIFIED LINES:          " // trim(Int2Text(linen))
+write(*,4) "******************************************************"
+write(*,1) "NORMAL TERMINATION"
+write(*,4) "******************************************************"
 
 !----------------------!
 ! Supporting Functions !

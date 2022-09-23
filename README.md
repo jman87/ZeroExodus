@@ -27,11 +27,14 @@ software.
 ## Program Compilation
 The simpliciity of this program is such that using a makefile would be
 overkill. Simply place the ZeroExodus directory in a location you prefer
-and then use your preferred Fortran compiler to compile the main.f03
+and then use your preferred Fortran compiler to compile the main.f08
 file, which is found in the src directory. For example, using gfortran
 the compile command would be:
 
-    gfortran main.f03 -o ZeroExodus
+    gfortran main.f08 -o ZeroExodus
+
+The executable can then be placed in a /bin directory in the master 
+directory if desired.
 
 ## Program Usage
 The anticipated usage of this program will be in a computational 

@@ -39,5 +39,13 @@
 *.g
 *.exo
 *.exotxt
-mesh_examples
 
+# Shell scripts
+*.bash
+*.sh
+*.csh
+
+# Folders
+mesh_examples
+examples_bob
+bin
