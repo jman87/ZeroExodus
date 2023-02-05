@@ -20,6 +20,8 @@
 !
 ! PROGRAM DEVELOPER:  Robert S. Browning IV, Ph.D.
 !
+! FORTRAN STANDARD: 2008
+!
 ! PROGRAM DESCRIPTION:
 !     ZeroExodus sets nearly-zero coordinates in an Exodus II mesh file to zero
 !     for a given tolerance and precision. Currently, the precision and 
