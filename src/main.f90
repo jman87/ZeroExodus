@@ -71,13 +71,15 @@
 
 program ZeroExodus
 
-use iso_fortran_env
+use intrinsic :: iso_fortran_env, only : ik=>INT64, rk=>REAL64
 
 implicit none
 
+!-------------------------------------------------------------------------------!
+!         ---> NOTE: Both INT32 and INT64 integers are used herein <---         !
+!-------------------------------------------------------------------------------!
+
 ! Parameters
-integer, parameter :: ik = INT64
-integer, parameter :: rk = REAL64
 integer(INT32), parameter :: arg_limit = 3
 real(rk), parameter :: default_coord_tol = 1.0e-15_rk
 real(rk), parameter :: ZERO = 0.00000000000000000000_rk
@@ -322,9 +324,17 @@ write(*,4) "******************************************************"
 !----------------------!
 contains
 
+! Function to convert integers to text/string
+function Int2Text(i) result(res)
+  character(:), allocatable :: res
+  integer(ik),  intent(in)  :: i
+  character(range(i)+2)     :: temp
+  write(temp,'(I0)') i
+  res = trim(temp)
+end function Int2Text
 
 ! Function to convert integers to text/string
-function Int2Text(value)
+function Int2TextOLD(value)
   implicit none
   ! Calling values
   integer(kind=ik), intent(in) :: value
@@ -381,10 +391,10 @@ function Int2Text(value)
   else
     Int2Text = adjustl(string)
   endif
-end function Int2Text
+end function Int2TextOLD
 
 
-!--------------------------!
-! Soft End of Main Program !
-!--------------------------!
+!---------------------!
+! End of Main Program !
+!---------------------!
 end program ZeroExodus
