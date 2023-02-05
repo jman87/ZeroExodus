@@ -20,7 +20,8 @@
 !
 ! PROGRAM DEVELOPER:  Robert S. Browning IV, Ph.D.
 !
-! FORTRAN STANDARD: 2008
+! LANGUAGE: Fortran 2008
+!           Note: .f90 file extensions are for compatibility with Intel compiler
 !
 ! PROGRAM DESCRIPTION:
 !     ZeroExodus sets nearly-zero coordinates in an Exodus II mesh file to zero
@@ -31,11 +32,11 @@
 ! PROGRAM COMPILATION:
 !     The simpliciity of this program is such that using a makefile would be
 !     overkill. Simply place the ZeroExodus directory in a location you prefer
-!     and then use your preferred Fortran compiler to compile the main.f03
+!     and then use your preferred Fortran compiler to compile the main.f90
 !     file, which is found in the src directory. For example, using gfortran
 !     the compile command would be:
 !
-!         gfortran main.f03 -o ZeroExodus
+!         gfortran main.f90 -o ZeroExodus
 !
 ! PROGRAM USAGE:
 !     The anticipated usage of this program will be in a computational 
