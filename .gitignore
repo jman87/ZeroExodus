@@ -35,7 +35,7 @@
 .DS_Store
 *.swp
 
-# Meesh Files
+# Mesh Files
 *.g
 *.exo
 *.exotxt
