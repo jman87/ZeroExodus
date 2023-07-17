@@ -71,7 +71,7 @@
 
 program ZeroExodus
 
-use intrinsic :: iso_fortran_env, only : ik=>INT64, rk=>REAL64
+use, intrinsic :: iso_fortran_env, only : ik=>INT64, rk=>REAL64
 
 implicit none
 
@@ -80,7 +80,7 @@ implicit none
 !-------------------------------------------------------------------------------!
 
 ! Parameters
-integer(INT32), parameter :: arg_limit = 3
+integer, parameter :: arg_limit = 3
 real(rk), parameter :: default_coord_tol = 1.0e-15_rk
 real(rk), parameter :: ZERO = 0.00000000000000000000_rk
 
@@ -91,10 +91,10 @@ character(120), dimension(arg_limit) :: arg
 character(300) :: text
 
 ! 32-Bit Integers
-integer(INT32) :: iost=0
-integer(INT32) :: num_args=-99
-integer(INT32) :: i32=0
-integer(INT32) :: ifile_len=0, ofile_len=0
+integer :: iost=0
+integer :: num_args=-99
+integer :: i32=0
+integer :: ifile_len=0, ofile_len=0
 
 ! Default-Kind Integers
 integer(ik) :: i
@@ -119,51 +119,52 @@ num_args = command_argument_count()
 
 ! If no arguments passed print help info
 if (num_args == 0) then
-    print *
-    write(*,1) "*************************************************************************"
-    print *
-    write(*,1) "                               ZeroExodus"
-    write(*,1) "                  Copyright 2022 Robert S. Browning IV"
-    print *
-    write(*,1) "*************************************************************************"
-    print *
-    write(*,1) "                                LICENSE"
-    print *
-    write(*,1) 'Licensed under the Apache License, Version 2.0 (the "License");'
-    write(*,1) "you may not use this file except in compliance with the License."
-    write(*,1) "You may obtain a copy of the License at"
-    print *
-    write(*,1) "    http://www.apache.org/licenses/LICENSE-2.0"
-    print *
-    write(*,1) "Unless required by applicable law or agreed to in writing, software"
-    write(*,1) 'distributed under the License is distributed on an "AS IS" BASIS,'
-    write(*,1) "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
-    write(*,1) "See the License for the specific language governing permissions and"
-    write(*,1) "limitations under the License."
-    print *
-    write(*,1) "*************************************************************************"
-    print *
-    write(*,1) "                              INSTRUCTIONS"
-    print *
-    write(*,1) "ZeroExodus accepts the following arguments:"
-    write(*,1) "    input.exotxt"
-    write(*,1) "   output.exotxt  (Optional: omit or set to 0 to use third argument)"
-    write(*,1) "       tolerance  (Optional: Defaults to 1.0e-15)"
-    print *
-    write(*,1) "*************************************************************************"
-    print *
+  write(*,1) &
+  &"",&
+  &"*************************************************************************",&
+  &"",&
+  &"                               ZeroExodus",&
+  &"                  Copyright 2022 Robert S. Browning IV",&
+  &"",&
+  &"*************************************************************************",&
+  &"",&
+  &"                                LICENSE",&
+  &"",&
+  &'Licensed under the Apache License, Version 2.0 (the "License");',&
+  &"you may not use this file except in compliance with the License.",&
+  &"You may obtain a copy of the License at",&
+  &"",&
+  &"    http://www.apache.org/licenses/LICENSE-2.0",&
+  &"",&
+  &"Unless required by applicable law or agreed to in writing, software",&
+  &'distributed under the License is distributed on an "AS IS" BASIS,',&
+  &"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",&
+  &"See the License for the specific language governing permissions and",&
+  &"limitations under the License.",&
+  &"",&
+  &"*************************************************************************",&
+  &"",&
+  &"                              INSTRUCTIONS",&
+  &"",&
+  &"ZeroExodus accepts the following arguments:",&
+  &"    input.exotxt",&
+  &"   output.exotxt  (Optional: omit or set to 0 to use third argument)",&
+  &"       tolerance  (Optional: Defaults to 1.0e-15)",&
+  &"",&
+  &"*************************************************************************",&
+  &""
 endif
 
 ! If too many arguments are passed then quit with error
 if (num_args > arg_limit) then
-    write(*,4) "ERROR: NUMBER OF COMMAND LINE ARGUMENTS CANNOT BE" //  &
-                " GREATER THAN " // Int2Text(int(arg_limit,ik))
-    stop
+  write(*,4) "ERROR: NUMBER OF COMMAND LINE ARGUMENTS CANNOT BE" //  &
+             " GREATER THAN " // Int2Text(int(arg_limit,ik))
+  stop
 endif
 
 ! Get the command arguments
 do i32 = 1, num_args
-    call get_command_argument(i32, arg(i32))
+  call get_command_argument(i32, arg(i32))
 end do
 
 ! Store arg1 as input file name and get its length
@@ -175,19 +176,19 @@ if (ifile_len < 8) then
   write(*,4) "ERROR: INPUT FILE MUST BE AN .exotxt FILE"
   stop
 elseif ((num_args>=1) .AND. (ifile((ifile_len-6):ifile_len) /= ".exotxt")) then
-    write(*,4) "ERROR: INPUT FILE MUST BE AN .exotxt FILE"
-    stop
+  write(*,4) "ERROR: INPUT FILE MUST BE AN .exotxt FILE"
+  stop
 endif
 
 ! Set output file name to default or to command line argument 2
 if (num_args >= 2) then
-    if (arg(2) == "0") then
-        ofile = adjustl(trim( ifile(1:(ifile_len-7)) // "_zeroexo.exotxt" ))
-    else
-        ofile = adjustl(trim(arg(2)))
-    endif
-else
+  if (arg(2) == "0") then
     ofile = adjustl(trim( ifile(1:(ifile_len-7)) // "_zeroexo.exotxt" ))
+  else
+    ofile = adjustl(trim(arg(2)))
+  endif
+else
+  ofile = adjustl(trim( ifile(1:(ifile_len-7)) // "_zeroexo.exotxt" ))
 endif
 ofile_len = len_trim(ofile)
 
@@ -202,17 +203,17 @@ endif
 
 ! Set tolerance for determining zero values of coordinates
 if (num_args >= 3) then
-    read(arg(3), *, iostat=iost) coord_tol
-    if (iost /= 0) then
-        write(*,4) "ERROR:  IMPROPER VALUE PROVIDED FOR COORDINATE TOLERANCE"
-        stop
-    endif
+  read(arg(3), *, iostat=iost) coord_tol
+  if (iost /= 0) then
+    write(*,4) "ERROR:  IMPROPER VALUE PROVIDED FOR COORDINATE TOLERANCE"
+    stop
+  endif
 else
-    coord_tol = default_coord_tol
+  coord_tol = default_coord_tol
 endif
 
 do i32 = 1, num_args
-    write(*,1) arg(i32)
+  write(*,1) arg(i32)
 end do
 
 9 format (A,ES18.10)
@@ -245,7 +246,7 @@ i = 0
 main_loop: do
   i = i + 1_ik
   read(1, 1, iostat=iost) text
-!print *, trim(text)
+  !print *, trim(text)
   if (is_iostat_end(iost)) then
     write(*,1) "END OF FILE REACHED"
     write(*,4) "******************************************************"
@@ -259,7 +260,7 @@ main_loop: do
     coordinate_loop: do
       i = i + 1_ik
       read(1, 1, iostat=iost) text
-!print *, trim(text)
+      !print *, trim(text)
       if (is_iostat_end(iost)) then
         write(*,4) "END OF FILE REACHED"
         exit main_loop
@@ -297,7 +298,7 @@ main_loop: do
     end do coordinate_loop
   else
     write(2,1) trim(text)
-!print *, trim(text)
+    !print *, trim(text)
   endif
 end do main_loop
 
@@ -325,74 +326,13 @@ write(*,4) "******************************************************"
 contains
 
 ! Function to convert integers to text/string
-function Int2Text(i) result(res)
+function Int2Text(j) result(res)
   character(:), allocatable :: res
-  integer(ik),  intent(in)  :: i
-  character(range(i)+2)     :: temp
-  write(temp,'(I0)') i
+  integer(ik),  intent(in)  :: j
+  character(range(j)+2)     :: temp
+  write(temp,'(I0)') j
   res = trim(temp)
 end function Int2Text
-
-! Function to convert integers to text/string
-function Int2TextOLD(value)
-  implicit none
-  ! Calling values
-  integer(kind=ik), intent(in) :: value
-  character(20) :: Int2Text
-  ! Function variables
-  character(5) :: frmt
-  character(19) :: string
-  ! Select proper format
-  select case (abs(value))
-    case(0_ik:9_ik)
-      frmt = '(I1)'
-    case(10_ik:99_ik)
-      frmt = '(I2)'
-    case(100_ik:999_ik)
-      frmt = '(I3)'
-    case(1000_ik:9999_ik)
-      frmt = '(I4)'
-    case(10000_ik:99999_ik)
-      frmt = '(I5)'
-    case(100000_ik:999999_ik)
-      frmt = '(I6)'
-    case(1000000_ik:9999999_ik)
-      frmt = '(I7)'
-    case(10000000_ik:99999999_ik)
-      frmt = '(I8)'
-    case(100000000_ik:999999999_ik)
-      frmt = '(I9)'
-    case(1000000000_ik:9999999999_ik)
-      frmt = '(I10)'
-    case(10000000000_ik:99999999999_ik)
-      frmt = '(I11)'
-    case(100000000000_ik:999999999999_ik)
-      frmt = '(I12)'
-    case(1000000000000_ik:9999999999999_ik)
-      frmt = '(I13)'
-    case(10000000000000_ik:99999999999999_ik)
-      frmt = '(I14)'
-    case(100000000000000_ik:999999999999999_ik)
-      frmt = '(I15)'
-    case(1000000000000000_ik:9999999999999999_ik)
-      frmt = '(I16)'
-    case(10000000000000000_ik:99999999999999999_ik)
-      frmt = '(I17)'
-    case(100000000000000000_ik:999999999999999999_ik)
-      frmt = '(I18)'
-    case(1000000000000000000_ik:9223372036854775807_ik)
-      frmt = '(I19)'
-  end select
-  ! Convert integer to character
-  write(string,frmt) abs(value)
-  ! Return left adjusted portion of string with correct sign
-  if (value < 0_ik) then
-    Int2Text = "-" // adjustl(string)
-  else
-    Int2Text = adjustl(string)
-  endif
-end function Int2TextOLD
-
 
 !---------------------!
 ! End of Main Program !
